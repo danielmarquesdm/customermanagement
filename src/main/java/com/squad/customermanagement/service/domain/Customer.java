@@ -1,9 +1,13 @@
-package com.squad.customermanagement.model;
+package com.squad.customermanagement.service.domain;
+
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
 public class Customer {
+    private Long Id;
     private String name;
     private Type type;
     private String federalId;
