@@ -2,9 +2,11 @@ package com.squad.customermanagement.service.impl;
 
 import com.squad.customermanagement.repository.CustomerRepository;
 import com.squad.customermanagement.repository.entity.CustomerEntity;
+import com.squad.customermanagement.repository.entity.CustomerRequestParamsEntity;
 import com.squad.customermanagement.repository.mapper.CustomerEntityMapper;
 import com.squad.customermanagement.service.CreateCustomerService;
 import com.squad.customermanagement.service.domain.Customer;
+import com.squad.customermanagement.service.domain.CustomerRequestParams;
 import com.squad.customermanagement.service.domain.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +34,10 @@ public class CreateCustomerServiceImpl implements CreateCustomerService {
     }
 
     @Override
-    public List<Customer> getAll() {
-        return repository.findAll().stream().map(mapper::toDomain).toList();
+    public List<Customer> getAll(CustomerRequestParams params) {
+        CustomerRequestParamsEntity customerRequestParamsEntity = mapper.toEntity(params);
+        return repository.findAllWithParameters(customerRequestParamsEntity)
+                .stream().map(mapper::toDomain).toList();
     }
 
     @Override
@@ -49,7 +53,8 @@ public class CreateCustomerServiceImpl implements CreateCustomerService {
     public Customer update(Long id, Customer customer) {
         Customer byId = this.getById(id);
 
-        CustomerEntity saved = repository.save(mapper.toEntity(customer.toBuilder().id(id).build()));
+        CustomerEntity saved = repository.save(mapper
+                .toEntity(customer.toBuilder().id(id).build()));
 
         return mapper.toDomain(saved);
     }
@@ -57,7 +62,8 @@ public class CreateCustomerServiceImpl implements CreateCustomerService {
     @Override
     public Customer delete(Long id) {
         Customer byId = this.getById(id);
-        CustomerEntity saved = repository.save(mapper.toEntity(byId.toBuilder().situation(Status.INACTIVE).build()));
+        CustomerEntity saved = repository.save(mapper
+                .toEntity(byId.toBuilder().situation(Status.INACTIVE).build()));
         return mapper.toDomain(saved);
     }
 }

@@ -1,10 +1,12 @@
 package com.squad.customermanagement.controller;
 
 import com.squad.customermanagement.controller.dto.CustomerRequest;
+import com.squad.customermanagement.controller.dto.CustomerRequestParamsDTO;
 import com.squad.customermanagement.controller.dto.CustomerResponse;
 import com.squad.customermanagement.controller.mapper.CustomerMapper;
 import com.squad.customermanagement.service.CreateCustomerService;
 import com.squad.customermanagement.service.domain.Customer;
+import com.squad.customermanagement.service.domain.CustomerRequestParams;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,8 +36,9 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerResponse>> getAll() {
-        List<CustomerResponse> allCustomers = service.getAll()
+    public ResponseEntity<List<CustomerResponse>> getAll(@RequestParam CustomerRequestParamsDTO requestParamsDTO) {
+        CustomerRequestParams requestParams = mapper.toDomain(requestParamsDTO);
+        List<CustomerResponse> allCustomers = service.getAll(requestParams)
                 .stream()
                 .map(mapper::toResponse)
                 .toList();
@@ -61,4 +64,10 @@ public class CustomerController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<CustomerResponse> changePhoneNumber(@PathVariable Long id,
+//                                                              @RequestBody String phoneNumber) {
+//
+//    }
 }

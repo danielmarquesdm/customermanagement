@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -19,5 +20,7 @@ public class CustomerEntity {
     private String ie;
     private LocalDate registerDate;
     private StatusEntity situation;
-    private String phoneNumber;
+
+    @Transient
+    private List<PhoneNumberEntity> phoneNumbers;
 }
