@@ -1,10 +1,17 @@
 package com.squad.customermanagement.repository.entity;
 
-import java.time.LocalDate;
-import java.util.List;
+import jakarta.persistence.*;
+import lombok.Data;
 
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "customer")
+@Data
 public class CustomerEntity {
-    private Long Id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private TypeEntity type;
     private String federalId;
@@ -12,5 +19,5 @@ public class CustomerEntity {
     private String ie;
     private LocalDate registerDate;
     private StatusEntity situation;
-    private List<String> phoneNumbers;
+    private String phoneNumber;
 }

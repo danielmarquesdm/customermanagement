@@ -1,12 +1,18 @@
 package com.squad.customermanagement.controller.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
-public class CustomerRequestDTO {
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public class CustomerResponse {
+    private Long id;
     private String name;
     private TypeDTO type;
     private String federalId;
@@ -14,5 +20,5 @@ public class CustomerRequestDTO {
     private String ie;
     private LocalDate registerDate;
     private StatusDTO situation;
-    private List<String> phoneNumbers;
+    private String phoneNumber;
 }
