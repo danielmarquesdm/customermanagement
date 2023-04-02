@@ -3,10 +3,13 @@ package com.squad.customermanagement.service.impl;
 import com.squad.customermanagement.repository.CustomerRepository;
 import com.squad.customermanagement.repository.entity.CustomerEntity;
 import com.squad.customermanagement.repository.entity.CustomerRequestParamsEntity;
+import com.squad.customermanagement.repository.entity.PhoneNumberEntity;
+import com.squad.customermanagement.repository.entity.StatusEntity;
 import com.squad.customermanagement.repository.mapper.CustomerEntityMapper;
 import com.squad.customermanagement.service.CreateCustomerService;
 import com.squad.customermanagement.service.domain.Customer;
 import com.squad.customermanagement.service.domain.CustomerRequestParams;
+import com.squad.customermanagement.service.domain.PhoneNumber;
 import com.squad.customermanagement.service.domain.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,40 +33,67 @@ public class CreateCustomerServiceImpl implements CreateCustomerService {
                 .build());
 
         CustomerEntity savedCustomer = repository.save(customerEntity);
+
         return mapper.toDomain(savedCustomer);
     }
 
     @Override
     public List<Customer> getAll(CustomerRequestParams params) {
         CustomerRequestParamsEntity customerRequestParamsEntity = mapper.toEntity(params);
+
         return repository.findAllWithParameters(customerRequestParamsEntity)
                 .stream().map(mapper::toDomain).toList();
     }
 
     @Override
     public Customer getById(Long id) {
+        CustomerEntity customer = this.getCustomer(id);
+
+        return mapper.toDomain(customer);
+    }
+
+    private CustomerEntity getCustomer(Long id) {
         Optional<CustomerEntity> customerOptional = repository.findById(id);
 
-        CustomerEntity customerEntity = customerOptional.orElseThrow(RuntimeException::new);
+        CustomerEntity customerEntity = customerOptional
+                .orElseThrow(() -> new RuntimeException("Customer not exists!"));
 
-        return mapper.toDomain(customerEntity);
+        return customerEntity;
     }
 
     @Override
     public Customer update(Long id, Customer customer) {
-        Customer byId = this.getById(id);
+        CustomerEntity customerEntity = this.getCustomer(id);
 
-        CustomerEntity saved = repository.save(mapper
-                .toEntity(customer.toBuilder().id(id).build()));
+        CustomerEntity saved = repository.save(customerEntity);
 
         return mapper.toDomain(saved);
     }
 
     @Override
     public Customer delete(Long id) {
-        Customer byId = this.getById(id);
-        CustomerEntity saved = repository.save(mapper
-                .toEntity(byId.toBuilder().situation(Status.INACTIVE).build()));
+        CustomerEntity customerEntity = this.getCustomer(id);
+
+        CustomerEntity saved = repository
+                .save(customerEntity.toBuilder()
+                        .situation(StatusEntity.INACTIVE)
+                        .build());
+
         return mapper.toDomain(saved);
+    }
+
+    @Override
+    public List<PhoneNumber> changePhoneNumbers(Long id, List<PhoneNumber> phoneNumbers) {
+        CustomerEntity customerEntity = this.getCustomer(id);
+
+        List<PhoneNumberEntity> phoneNumberEntities = phoneNumbers.stream()
+                .sorted((o1, o2) -> o1.isMainPhoneNumber() ? 1 : -1)
+                .map(mapper::toEntity).toList();
+
+        CustomerEntity saved = repository.save(customerEntity.toBuilder()
+                .phoneNumbers(phoneNumberEntities)
+                .build());
+
+        return saved.getPhoneNumbers().stream().map(mapper::toDomain).toList();
     }
 }

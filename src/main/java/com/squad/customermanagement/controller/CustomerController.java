@@ -3,10 +3,12 @@ package com.squad.customermanagement.controller;
 import com.squad.customermanagement.controller.dto.CustomerRequest;
 import com.squad.customermanagement.controller.dto.CustomerRequestParamsDTO;
 import com.squad.customermanagement.controller.dto.CustomerResponse;
+import com.squad.customermanagement.controller.dto.PhoneNumberDTO;
 import com.squad.customermanagement.controller.mapper.CustomerMapper;
 import com.squad.customermanagement.service.CreateCustomerService;
 import com.squad.customermanagement.service.domain.Customer;
 import com.squad.customermanagement.service.domain.CustomerRequestParams;
+import com.squad.customermanagement.service.domain.PhoneNumber;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,9 +67,14 @@ public class CustomerController {
         return ResponseEntity.noContent().build();
     }
 
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<CustomerResponse> changePhoneNumber(@PathVariable Long id,
-//                                                              @RequestBody String phoneNumber) {
-//
-//    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<List<PhoneNumberDTO>> changePhoneNumber(@PathVariable Long id,
+                                                                  @RequestBody List<PhoneNumberDTO> requestPhoneNumbers) {
+        List<PhoneNumber> phoneNumbers = requestPhoneNumbers.stream().map(mapper::toDomain).toList();
+
+        List<PhoneNumber> updatedPhoneNumbers = service.changePhoneNumbers(id, phoneNumbers);
+
+        return ResponseEntity.ok(updatedPhoneNumbers.stream()
+                .map(mapper::toResponse).toList());
+    }
 }

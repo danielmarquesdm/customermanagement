@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder(toBuilder = true)
 @NoArgsConstructor
@@ -19,5 +21,5 @@ public class CustomerRequest {
     private String federalId;
     private String rg;
     private String ie;
-    private String phoneNumber;
+    private List<PhoneNumberDTO> phoneNumbers;
 }

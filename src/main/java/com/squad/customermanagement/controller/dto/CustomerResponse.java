@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder(toBuilder = true)
@@ -20,5 +21,5 @@ public class CustomerResponse {
     private String ie;
     private LocalDate registerDate;
     private StatusDTO situation;
-    private String phoneNumber;
+    private List<PhoneNumberDTO> phoneNumbers;
 }
