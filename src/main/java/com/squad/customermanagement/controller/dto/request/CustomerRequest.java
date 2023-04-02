@@ -1,5 +1,6 @@
-package com.squad.customermanagement.controller.dto;
+package com.squad.customermanagement.controller.dto.request;
 
+import com.squad.customermanagement.controller.dto.TypeDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -21,5 +22,5 @@ public class CustomerRequest {
     private String federalId;
     private String rg;
     private String ie;
-    private List<PhoneNumberDTO> phoneNumbers;
+    private List<PhoneNumberRequestDTO> phoneNumbers;
 }

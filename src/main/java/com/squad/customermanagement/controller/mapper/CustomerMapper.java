@@ -1,9 +1,10 @@
 package com.squad.customermanagement.controller.mapper;
 
-import com.squad.customermanagement.controller.dto.CustomerRequest;
-import com.squad.customermanagement.controller.dto.CustomerRequestParamsDTO;
-import com.squad.customermanagement.controller.dto.CustomerResponse;
-import com.squad.customermanagement.controller.dto.PhoneNumberDTO;
+import com.squad.customermanagement.controller.dto.request.PhoneNumberRequestDTO;
+import com.squad.customermanagement.controller.dto.request.CustomerRequest;
+import com.squad.customermanagement.controller.dto.request.CustomerRequestParamsDTO;
+import com.squad.customermanagement.controller.dto.response.CustomerResponse;
+import com.squad.customermanagement.controller.dto.response.PhoneNumberResponseDTO;
 import com.squad.customermanagement.service.domain.Customer;
 import com.squad.customermanagement.service.domain.CustomerRequestParams;
 import com.squad.customermanagement.service.domain.PhoneNumber;
@@ -15,9 +16,9 @@ public interface CustomerMapper {
 
     CustomerRequestParams toDomain(CustomerRequestParamsDTO requestParams);
 
-    PhoneNumber toDomain(PhoneNumberDTO phoneNumber);
+    PhoneNumber toDomain(PhoneNumberRequestDTO phoneNumber);
 
     CustomerResponse toResponse(Customer customer);
 
-    PhoneNumberDTO toResponse(PhoneNumber phoneNumber);
+    PhoneNumberResponseDTO toResponse(PhoneNumber phoneNumber);
 }
