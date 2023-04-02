@@ -1,4 +1,4 @@
-package com.squad.customermanagement.model;
+package com.squad.customermanagement.service.domain;
 
 public enum Type {
     NATURAL_PERSON,
