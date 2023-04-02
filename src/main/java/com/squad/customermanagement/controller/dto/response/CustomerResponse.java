@@ -1,11 +1,15 @@
-package com.squad.customermanagement.controller.dto;
+package com.squad.customermanagement.controller.dto.response;
 
+import com.squad.customermanagement.controller.dto.request.PhoneNumberRequestDTO;
+import com.squad.customermanagement.controller.dto.StatusDTO;
+import com.squad.customermanagement.controller.dto.TypeDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder(toBuilder = true)
@@ -20,5 +24,5 @@ public class CustomerResponse {
     private String ie;
     private LocalDate registerDate;
     private StatusDTO situation;
-    private String phoneNumber;
+    private List<PhoneNumberRequestDTO> phoneNumbers;
 }
