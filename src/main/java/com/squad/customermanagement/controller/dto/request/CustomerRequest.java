@@ -15,10 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerRequest {
-    @NotBlank
+    @NotBlank(message = "Nome é campo obrigatório")
     private String name;
     @NotNull
     private TypeDTO type;
+    @NotBlank(message = "CPF ou CNPJ é obrigatório")
     private String federalId;
     private String rg;
     private String ie;
