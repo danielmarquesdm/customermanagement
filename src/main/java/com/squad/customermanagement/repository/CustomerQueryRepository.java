@@ -6,5 +6,5 @@ import com.squad.customermanagement.repository.entity.CustomerRequestParamsEntit
 import java.util.List;
 
 public interface CustomerQueryRepository {
-    List<CustomerEntity> findAllWithParameters(CustomerRequestParamsEntity customerRequestParamsEntity);
+    List<CustomerEntity> findAllByParameters(CustomerRequestParamsEntity params);
 }

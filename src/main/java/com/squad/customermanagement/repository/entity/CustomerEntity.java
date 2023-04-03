@@ -1,6 +1,13 @@
 package com.squad.customermanagement.repository.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +34,7 @@ public class CustomerEntity {
     private LocalDate registerDate;
     private StatusEntity situation;
 
-    @JoinColumn(name="phone_number_id")
-    @OneToMany(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "phone_number_id")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<PhoneNumberEntity> phoneNumbers;
 }

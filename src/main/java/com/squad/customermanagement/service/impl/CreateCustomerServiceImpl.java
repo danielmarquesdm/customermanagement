@@ -2,13 +2,17 @@ package com.squad.customermanagement.service.impl;
 
 import com.squad.customermanagement.repository.CustomerRepository;
 import com.squad.customermanagement.repository.entity.CustomerEntity;
+import com.squad.customermanagement.repository.entity.CustomerRequestParamsEntity;
 import com.squad.customermanagement.repository.entity.StatusEntity;
 import com.squad.customermanagement.repository.mapper.CustomerEntityMapper;
 import com.squad.customermanagement.service.CreateCustomerService;
 import com.squad.customermanagement.service.domain.Customer;
+import com.squad.customermanagement.service.domain.CustomerRequestParams;
 import com.squad.customermanagement.service.domain.PhoneNumber;
 import com.squad.customermanagement.service.domain.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -104,6 +108,17 @@ public class CreateCustomerServiceImpl implements CreateCustomerService {
         return saved.getPhoneNumbers().stream().map(mapper::toDomain).toList();
     }
 
+    @Override
+    public List<Customer> searchBy(CustomerRequestParams params, int page, int pageSize) {
+        CustomerRequestParamsEntity paramsEntity = mapper.toEntity(params);
+
+        return repository
+                .findAllByParameters(paramsEntity)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
+    }
+
     private List<PhoneNumber> sortPhoneNumbers(List<PhoneNumber> phoneNumbers) {
         return phoneNumbers.stream()
                 .sorted((o1, o2) -> o1.isMainPhoneNumber() ? -1 : 1)
@@ -123,6 +138,7 @@ public class CreateCustomerServiceImpl implements CreateCustomerService {
                     .filter(PhoneNumber::isMainPhoneNumber)
                     .toList()
                     .get(0);
+
             return phoneNumbers.stream()
                     .map(phoneNumber1 -> {
                         if (phoneNumber1.getId().equals(phoneNumber.getId())) {

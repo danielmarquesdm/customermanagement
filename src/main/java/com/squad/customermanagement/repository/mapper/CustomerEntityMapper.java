@@ -12,9 +12,9 @@ import org.mapstruct.Mapper;
 public interface CustomerEntityMapper {
     CustomerEntity toEntity(Customer customer);
 
-    CustomerRequestParamsEntity toEntity(CustomerRequestParams params);
-
     PhoneNumberEntity toEntity(PhoneNumber phoneNumber);
+
+    CustomerRequestParamsEntity toEntity(CustomerRequestParams params);
 
     Customer toDomain(CustomerEntity customer);
 
