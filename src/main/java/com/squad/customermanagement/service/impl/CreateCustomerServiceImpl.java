@@ -1,5 +1,7 @@
 package com.squad.customermanagement.service.impl;
 
+import com.squad.customermanagement.controller.dto.StatusDTO;
+import com.squad.customermanagement.controller.dto.TypeDTO;
 import com.squad.customermanagement.repository.CustomerRepository;
 import com.squad.customermanagement.repository.entity.CustomerEntity;
 import com.squad.customermanagement.repository.entity.StatusEntity;
@@ -102,6 +104,12 @@ public class CreateCustomerServiceImpl implements CreateCustomerService {
         CustomerEntity saved = repository.save(customerEntity);
 
         return saved.getPhoneNumbers().stream().map(mapper::toDomain).toList();
+    }
+
+    @Override
+    public List<Customer> searchBy(String name, StatusDTO situation, LocalDate registrationDate, TypeDTO type) {
+        List<CustomerEntity> allByParameters = repository.findAllByParameters(name, situation, registrationDate, type);
+        return allByParameters.stream().map(mapper::toDomain).toList();
     }
 
     private List<PhoneNumber> sortPhoneNumbers(List<PhoneNumber> phoneNumbers) {

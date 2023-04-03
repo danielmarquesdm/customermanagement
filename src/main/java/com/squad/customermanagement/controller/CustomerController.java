@@ -1,5 +1,7 @@
 package com.squad.customermanagement.controller;
 
+import com.squad.customermanagement.controller.dto.StatusDTO;
+import com.squad.customermanagement.controller.dto.TypeDTO;
 import com.squad.customermanagement.controller.dto.request.CustomerRequest;
 import com.squad.customermanagement.controller.dto.request.PhoneNumberRequestDTO;
 import com.squad.customermanagement.controller.dto.response.CustomerResponse;
@@ -14,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -48,17 +51,19 @@ public class CustomerController {
         return ResponseEntity.ok(allCustomers);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<CustomerResponse>> getAll(CustomerRequestParamsDTO requestParamsDTO) {
-//        CustomerRequestParams requestParams = mapper.toDomain(requestParamsDTO);
-//
-//        List<CustomerResponse> allCustomers = service.getAll(requestParams)
-//                .stream()
-//                .map(mapper::toResponse)
-//                .toList();
-//
-//        return ResponseEntity.ok(allCustomers);
-//    }
+    @GetMapping("/search")
+    public ResponseEntity<List<CustomerResponse>> searchBy(@RequestParam(value = "name", required = false) String name,
+                                                           @RequestParam(value = "status", required = false) StatusDTO situation,
+                                                           @RequestParam(value = "registrationDate", required = false) LocalDate registrationDate,
+                                                           @RequestParam(value = "type", required = false) TypeDTO type) {
+
+        List<CustomerResponse> allCustomers = service.searchBy(name, situation, registrationDate, type)
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
+
+        return ResponseEntity.ok(allCustomers);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponse> getById(@PathVariable Long id) {
