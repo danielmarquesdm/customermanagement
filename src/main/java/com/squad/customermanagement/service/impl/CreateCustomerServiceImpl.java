@@ -1,16 +1,18 @@
 package com.squad.customermanagement.service.impl;
 
-import com.squad.customermanagement.controller.dto.StatusDTO;
-import com.squad.customermanagement.controller.dto.TypeDTO;
 import com.squad.customermanagement.repository.CustomerRepository;
 import com.squad.customermanagement.repository.entity.CustomerEntity;
+import com.squad.customermanagement.repository.entity.CustomerRequestParamsEntity;
 import com.squad.customermanagement.repository.entity.StatusEntity;
 import com.squad.customermanagement.repository.mapper.CustomerEntityMapper;
 import com.squad.customermanagement.service.CreateCustomerService;
 import com.squad.customermanagement.service.domain.Customer;
+import com.squad.customermanagement.service.domain.CustomerRequestParams;
 import com.squad.customermanagement.service.domain.PhoneNumber;
 import com.squad.customermanagement.service.domain.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -107,9 +109,14 @@ public class CreateCustomerServiceImpl implements CreateCustomerService {
     }
 
     @Override
-    public List<Customer> searchBy(String name, StatusDTO situation, LocalDate registrationDate, TypeDTO type) {
-        List<CustomerEntity> allByParameters = repository.findAllByParameters(name, situation, registrationDate, type);
-        return allByParameters.stream().map(mapper::toDomain).toList();
+    public List<Customer> searchBy(CustomerRequestParams params, int page, int pageSize) {
+        CustomerRequestParamsEntity paramsEntity = mapper.toEntity(params);
+
+        return repository
+                .findAllByParameters(paramsEntity)
+                .stream()
+                .map(mapper::toDomain)
+                .toList();
     }
 
     private List<PhoneNumber> sortPhoneNumbers(List<PhoneNumber> phoneNumbers) {
@@ -131,6 +138,7 @@ public class CreateCustomerServiceImpl implements CreateCustomerService {
                     .filter(PhoneNumber::isMainPhoneNumber)
                     .toList()
                     .get(0);
+
             return phoneNumbers.stream()
                     .map(phoneNumber1 -> {
                         if (phoneNumber1.getId().equals(phoneNumber.getId())) {

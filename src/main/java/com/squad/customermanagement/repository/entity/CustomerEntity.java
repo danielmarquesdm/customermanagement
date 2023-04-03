@@ -35,6 +35,6 @@ public class CustomerEntity {
     private StatusEntity situation;
 
     @JoinColumn(name = "phone_number_id")
-    @OneToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<PhoneNumberEntity> phoneNumbers;
 }
