@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "40a1bc07-47b5-4d87-862d-a837f58f072f",
+		"name": "customer-management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Alberto Silva\",\r\n    \"type\": \"NATURAL_PERSON\",\r\n    \"federalId\": \"828.536.920-00\",\r\n    \"rg\": \"46935897659134-8\",\r\n    \"phoneNumbers\": [\r\n        {\r\n            \"mainPhoneNumber\": false,\r\n            \"phoneNumber\": \"11233411556\"\r\n        },\r\n        {\r\n            \"mainPhoneNumber\": false,\r\n            \"phoneNumber\": \"11235233656\"\r\n        },\r\n        {\r\n            \"mainPhoneNumber\": true,\r\n            \"phoneNumber\": \"1765365289\"\r\n        },\r\n        {\r\n            \"mainPhoneNumber\": false,\r\n            \"phoneNumber\": \"1123665428\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/customer",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All customers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/customer",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search By parameters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/customer/search?name=t",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "t"
+						},
+						{
+							"key": "status",
+							"value": "ACTIVE",
+							"disabled": true
+						},
+						{
+							"key": "registrationDate",
+							"value": "2023-04-02",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "NATURAL_PERSON",
+							"disabled": true
+						},
+						{
+							"key": "pages",
+							"value": "0",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customer by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/customer/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customer by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Raimundo Silva\",\r\n    \"type\":  \"NATURAL_PERSON\",\r\n    \"federalId\": \"83354321\",\r\n    \"rg\": \"46945897659224-9\",\r\n    \"phoneNumber\": \"11235234556\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/customer/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Customer by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Raimundo Silva\",\r\n    \"type\":  \"NATURAL_PERSON\",\r\n    \"federalId\": \"83354321\",\r\n    \"rg\": \"46945897659224-9\",\r\n    \"phoneNumber\": \"11235234556\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/customer/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PhoneNumber from a customer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\": 13,\r\n        \"mainPhoneNumber\": false,\r\n        \"phoneNumber\": \"112352343211\"\r\n    },\r\n    {\r\n        \"id\": 14,\r\n        \"mainPhoneNumber\": false,\r\n        \"phoneNumber\": \"11235234556\"\r\n    },\r\n    {\r\n        \"id\": 15,\r\n        \"mainPhoneNumber\": false,\r\n        \"phoneNumber\": \"11235233444\"\r\n    },\r\n    {\r\n        \"id\": 16,\r\n        \"mainPhoneNumber\": true,\r\n        \"phoneNumber\": \"11235234999\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/customer/4/phone-numbers",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"4",
+						"phone-numbers"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
