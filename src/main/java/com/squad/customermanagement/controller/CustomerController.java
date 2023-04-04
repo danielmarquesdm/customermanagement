@@ -53,7 +53,7 @@ public class CustomerController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(mapper.toResponse(created));
+                .build();
     }
 
     @GetMapping
